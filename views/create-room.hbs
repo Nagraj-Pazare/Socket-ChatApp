@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/create-room" method="post">
+
+    <input type="text" name="username" id="username" value="{{user.username}}" hidden>
+    <input type="text" name="userId" id="userId" value="{{user._id}}" hidden>
+    <input type="text" name="roomname" id="roomname" required>
+    <button type="submit">Create</button>
+    </form>
+</body>
+</html>
