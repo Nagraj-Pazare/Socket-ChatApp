@@ -97,6 +97,9 @@
 </head>
 <body>
     <main>
+        {{#if message}}
+        <p style="color: red; font-size: 1.2em; font-weight: 600;">{{message}}</p>
+        {{/if}}
         <form action="/login" method="post">
         <label for="email">Enter Email: </label>
         <input type="email" name="email" id="email" required> <br><br>

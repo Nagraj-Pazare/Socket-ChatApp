@@ -20,7 +20,10 @@ export const initialServer = (httpserver) => {
  });
 
  socket.on('send-message', async ({message, username})=>{
+  await Room.findByIdAndUpdate(currentRoomId, {
+});
     console.log("send-message: ",message);
+    console.log("send-message  username: ", username);
     console.log("send-message currentRoomId: ",currentRoomId);
 
     const socketId = socket.id;
@@ -35,8 +38,6 @@ export const initialServer = (httpserver) => {
         }
         }
     })
-
-    await newChatMessage.save();
     console.log("newChatMessage: " + username + " sent " + message);
     
  })

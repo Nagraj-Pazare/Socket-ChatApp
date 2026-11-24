@@ -38,6 +38,7 @@
     flex-direction: column;
     gap: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    scroll-behavior: smooth;
   }
 
   /* Individual message bubbles (works for both .old-message and new plain divs) */
@@ -97,24 +98,47 @@
   .message-input button:hover {
     background-color: #2b6cb0;
   }
+
+  .roomname{
+    height: 50px;
+    width: fit-content;
+    background-color: rgb(222, 220, 220);
+    font-size: 1.5em;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0px;
+    padding: 10px;
+    border-radius: 10px;
+  }
 </style>
 
 
 </head>
 <body>
+  <h1>Hello {{user.username}}</h1>
+  <div class="roomname">
+      <span>{{room.roomname}}</span>
+    </div>
    <div class="message-box">
      {{#each room.chats}}
       <div class="old-message">
-     {{this.sendername}}: {{this.message}}
+        {{#ifCond this.sendername '==' ../user.username}}
+         me :  {{../this.message}}
+        {{/ifCond}}
+        {{#ifCond this.sendername '!=' ../user.username}}
+        {{../this.sendername}} : {{../this.message}}
+        {{/ifCond}}
+
       </div>
      {{/each}}
    </div>
    <div class="message-input">
     <input type="text" name="roomId" id="roomId" value="{{room._id}}" hidden>
-    {{!-- <h1>{{user.username}}</h1> --}}
     <input type="text" name="user" id="user" value="{{user.username}}" hidden>
     <input type="text" name="message" id="message">
-    <button onclick="sendMessage()">Send</button>
+    <button onclick="sendMessage(event)">Send</button>
    </div>
 
 
@@ -123,8 +147,8 @@
     const socket = io();
 
     const messageBox = document.querySelector('.message-box');
-    const user = document.getElementById('user');
-    const username = user.value;
+    const userData = document.getElementById('user');
+    const username = userData.value;
     const thisUsername = username;
 
 
@@ -132,6 +156,17 @@
     const roomId = roomData.value; 
     {{!-- console.log(roomId); --}}
     socket.emit('join-room', {roomId});
+
+    const sendMessage = (e)=>{
+        const messageInput = document.getElementById('message');
+        const message = messageInput.value;
+        {{!-- console.log("messageInput.value: ", messageInput.value); --}}
+        console.log('username: ', username);
+        socket.emit('send-message',{ message, username });
+        messageInput.value = '';
+
+        messageBox.scrollTop = messageBox.scrollHeight;
+    }
 
     socket.on("receive-message", ({message, socketId, username})=>{
         const newMsgDiv = document.createElement('div');
@@ -142,15 +177,12 @@
         newMsgDiv.textContent = username + ": " + message;
         }
         messageBox.append(newMsgDiv);
+
+        messageBox.scrollTop = messageBox.scrollHeight;
     })
 
-    const sendMessage = ()=>{
-        const messageInput = document.getElementById('message');
-        const message = messageInput.value;
-        {{!-- console.log("messageInput.value: ", messageInput.value); --}}
-        socket.emit('send-message',{ message, username });
-        messageInput.value = '';
-    }
+    messageBox.scrollTop = messageBox.scrollHeight;
+    
 </script>
 </body>
 </html>

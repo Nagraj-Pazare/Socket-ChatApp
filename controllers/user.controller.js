@@ -43,6 +43,8 @@ export const registerController = async (req, res) => {
 };
 
 export const loginRouteController = async (req, res) => {
+  res.clearCookie('accessToken');
+  res.clearCookie('refreshToken');
   return res.render("login");
 };
 
@@ -71,13 +73,11 @@ export const loginController = async (req, res) => {
       const refreshToken = generateRefreshToken(user);
       res.cookie('accessToken', accessToken, {
         httpOnly: true,
-        secure: true,
       });
       res.cookie('refreshToken', refreshToken, {
         httpOnly: true,
-        secure: true,
       })
-      req.session.user = user;
+      req.user = user;
       return res.status(200).redirect("/all-rooms");
     }
 
@@ -112,10 +112,9 @@ export const allRoomsController = async (req, res) => {
 
 export const createRoomRoute = async (req, res) => {
   try {
-    console.log("CreateRoomRoute session: ", req.session.user);
 
-    const { _id } = req.session.user;
-    const user = await User.findById(_id);
+    const { userId } = req.user;
+    const user = await User.findById(userId);
     if (!user) {
       return res.status(404).redirect("all-rooms");
     }
@@ -131,14 +130,12 @@ export const createRoomRoute = async (req, res) => {
 export const createRoomController = async (req, res) => {
   try {
     const { roomname } = req.body;
-    console.log(req.session.user);
-
-    const { _id, username } = req.session.user;
+    const { userId, username } = req.user;
 
     const newRoom = new Room({
       roomname,
       members: {
-        userId: _id,
+        userId,
         username,
       },
     });
@@ -154,7 +151,10 @@ export const createRoomController = async (req, res) => {
 
 export const getSingleRoomController = async (req, res) => {
   try {
-    const { roomId, userId, username } = req.body;
+    const { roomId } = req.body;
+    const { userId, username } = req.user;
+    // console.log("getSingleRoomController user: ", req.user);
+    
     // console.log("getSingleRoomController roomId: ", roomId);
     
     
@@ -176,10 +176,10 @@ export const getSingleRoomController = async (req, res) => {
 
     return res.render("single-room", {
       room,
+      user: req.user,
     });
   } catch (error) {
     console.log("getSingleRoomController: ", error);
-
     return res.end();
   }
 };

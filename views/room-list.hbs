@@ -101,18 +101,14 @@
 <body>
     <div class="all-rooms">
     <h1>Chat List</h1>
-    {{user._id}}
-    {{user.username}}
     {{#each rooms}}
     <h1>{{this.roomname}}</h1>
-    <form action="/join-room" method="post">
+    <form action="/join-room" method="post" class="joinForm">
     members: 
     {{#each this.members}}
     {{this.username}},
     {{/each}}
     <input type="text" name="roomId" id="roomId" value="{{this._id}}" hidden>
-    <input type="text" name="userId" id="userId" value="{{../user._id}}" hidden>
-    <input type="text" name="username" id="username" value="{{../user.username}}" hidden>
     <button type="submit">Join</button>
     </form>
     {{/each}}
