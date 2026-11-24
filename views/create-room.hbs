@@ -4,12 +4,69 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+
+  body {
+    background-color: #f4f6f8;
+    color: #2d3748;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+
+  form {
+    width: 100%;
+    max-width: 420px;
+    background-color: #ffffff;
+    padding: 28px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    display: flex;
+    gap: 10px;
+  }
+
+  input[type="text"] {
+    flex: 1;
+    padding: 10px 14px;
+    border: 1px solid #cbd5e0;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s ease;
+  }
+
+  input[type="text"]:focus {
+    border-color: #38a169;
+  }
+
+  button[type="submit"] {
+    background-color: #38a169;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  button[type="submit"]:hover {
+    background-color: #2f855a;
+  }
+</style>
+
 </head>
 <body>
     <form action="/create-room" method="post">
-
-    <input type="text" name="username" id="username" value="{{user.username}}" hidden>
-    <input type="text" name="userId" id="userId" value="{{user._id}}" hidden>
     <input type="text" name="roomname" id="roomname" required>
     <button type="submit">Create</button>
     </form>

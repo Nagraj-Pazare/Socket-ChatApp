@@ -4,15 +4,119 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
+    <style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+
+  body {
+    background-color: #f4f6f8;
+    color: #2d3748;
+    padding: 32px 16px;
+    line-height: 1.5;
+  }
+
+  .all-rooms {
+    max-width: 600px;
+    margin: 0 auto;
+    background: #ffffff;
+    padding: 28px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  }
+
+  /* Main "Chat List" heading */
+  .all-rooms > h1:first-child {
+    font-size: 1.75rem;
+    color: #1a202c;
+    margin-bottom: 8px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #edf2f7;
+  }
+
+  /* Room name headings */
+  .all-rooms > h1:not(:first-child) {
+    font-size: 1.2rem;
+    color: #2b6cb0;
+    margin-top: 20px;
+    margin-bottom: 8px;
+  }
+
+  /* Room card / form */
+  .all-rooms form {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 14px 16px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 0.92rem;
+    color: #4a5568;
+  }
+
+  /* Join button */
+  .all-rooms button[type="submit"] {
+    background-color: #3182ce;
+    color: #ffffff;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  .all-rooms button[type="submit"]:hover {
+    background-color: #2b6cb0;
+  }
+
+  /* "Create Room" link styled as a clean button */
+  .all-rooms > a {
+    display: inline-block;
+    margin-top: 24px;
+    text-decoration: none;
+    background-color: #38a169;
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: background-color 0.2s ease;
+  }
+
+  .all-rooms > a:hover {
+    background-color: #2f855a;
+  }
+</style>
+
 </head>
 <body>
-    <h1>{{message}}</h1>
-    {{#unless message}}
-    {{/unless}}
+    <div class="all-rooms">
     <h1>Chat List</h1>
-    <form action="/create-room" >
-    <input type="text" name="userId" value="{{user.id}}" hidden>
-    <button type="submit">Create Room</button>
+    {{user._id}}
+    {{user.username}}
+    {{#each rooms}}
+    <h1>{{this.roomname}}</h1>
+    <form action="/join-room" method="post">
+    members: 
+    {{#each this.members}}
+    {{this.username}},
+    {{/each}}
+    <input type="text" name="roomId" id="roomId" value="{{this._id}}" hidden>
+    <input type="text" name="userId" id="userId" value="{{../user._id}}" hidden>
+    <input type="text" name="username" id="username" value="{{../user.username}}" hidden>
+    <button type="submit">Join</button>
     </form>
+    {{/each}}
+    <a href="/create-room">Create Room</a>
+    </div>
 </body>
 </html>
