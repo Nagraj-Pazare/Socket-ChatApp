@@ -7,7 +7,7 @@ export const authToken = async (req, res, next) => {
     const accessToken = req.cookies.accessToken;
     // console.log("accessToken: " + accessToken);
     if(!accessToken){
-        return res.redirect('/login');
+        throw new jwt.TokenExpiredError("Access Token not Found");
     }
     const decoded = jwt.verify(
       accessToken,

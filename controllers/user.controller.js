@@ -95,6 +95,7 @@ export const loginController = async (req, res) => {
 
 export const allRoomsController = async (req, res) => {
   try {
+    const { username } = req.user;
     const rooms = await Room.find();
     if (!rooms || rooms == []) {
       return res.status(404).render("room-list", {
@@ -103,6 +104,7 @@ export const allRoomsController = async (req, res) => {
     }
     return res.status(200).render("room-list", {
       rooms,
+      username
     });
   } catch (error) {
     console.log(error);

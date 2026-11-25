@@ -95,12 +95,30 @@
   .all-rooms > a:hover {
     background-color: #2f855a;
   }
+
+  .all-room-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  #chat-list-tag{
+    font-size: 1.8em;
+    font-weight: 700;
+  }
+  #greet-user-tag{
+    font-size: 1.4em;
+    font-weight: 400;
+    
+  }
 </style>
 
 </head>
 <body>
     <div class="all-rooms">
-    <h1>Chat List</h1>
+    <div class="all-room-header">
+    <span id="chat-list-tag">Chat List</span> 
+    <span id="greet-user-tag">Hello {{username}}👋</span>
+    </div>
     {{#each rooms}}
     <h1>{{this.roomname}}</h1>
     <form action="/join-room" method="post" class="joinForm">

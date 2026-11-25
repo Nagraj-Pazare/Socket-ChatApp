@@ -42,16 +42,30 @@
   }
 
   /* Individual message bubbles (works for both .old-message and new plain divs) */
-  .message-box > div {
-    background-color: #edf2f7;
+  #other-message {
+    background-color: #0574e353;
     color: #1a202c;
     padding: 10px 14px;
     border-radius: 10px;
     max-width: 80%;
     width: fit-content;
-    font-size: 0.95rem;
+    font-weight: 400;
     line-height: 1.4;
     word-wrap: break-word;
+  }
+
+  #my-message {
+    background-color: #36f3c7bb;
+    color: #1a202c;
+    padding: 10px 14px;
+    border-radius: 10px;
+    max-width: 80%;
+    width: fit-content;
+    font-weight: 400;
+    line-height: 1.4;
+    word-wrap: break-word;
+    margin-left: auto;
+    margin-right: 0px;
   }
 
   /* Bottom input bar attached seamlessly to .message-box */
@@ -125,10 +139,10 @@
      {{#each room.chats}}
       <div class="old-message">
         {{#ifCond this.sendername '==' ../user.username}}
-         me :  {{../this.message}}
+        <div id="my-message">me :  {{../this.message}}</div>
         {{/ifCond}}
         {{#ifCond this.sendername '!=' ../user.username}}
-        {{../this.sendername}} : {{../this.message}}
+        <div id="other-message">{{../this.sendername}} : {{../this.message}}</div>
         {{/ifCond}}
 
       </div>
@@ -170,11 +184,27 @@
 
     socket.on("receive-message", ({message, socketId, username})=>{
         const newMsgDiv = document.createElement('div');
+        newMsgDiv.style.color = "#1a202c";
+        newMsgDiv.style.padding = "10px 14px";
+        newMsgDiv.style.borderRadius = "10px";
+        newMsgDiv.style.maxWidth = "80%";
+        newMsgDiv.style.width = "fit-content";
+        newMsgDiv.style.fontWeight = "400";
+        newMsgDiv.style.lineHeight = "1.4";
+        newMsgDiv.style.wordWrap = "break-word";
+        newMsgDiv.style.position = "relative";
         console.log(username + " Sent " + message);
+
+
         if(username==thisUsername){
-        newMsgDiv.textContent =  "Me: " + message;
+        newMsgDiv.textContent =  "me: " + message;
+        newMsgDiv.style.backgroundColor = "#36f3c7bb";
+        newMsgDiv.style.marginLeft = 'auto';
+        newMsgDiv.style.marginRight = '0px';
         } else{
         newMsgDiv.textContent = username + ": " + message;
+        newMsgDiv.style.backgroundColor = "#0574e353";
+        newMsgDiv.style.left = '0px';
         }
         messageBox.append(newMsgDiv);
 
