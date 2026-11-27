@@ -22,40 +22,53 @@ body {
   color: #1c2733;
 }
 
-/* ================= TOP GLOBAL NAVBAR ================= */
 .navbar {
   width: 100%;
   height: 56px;
-  background-color: #ffffff;
-  border-bottom: 1px solid #dfe5ec;
+  background-color: #517da2;
   padding: 0 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-shrink: 0;
   z-index: 20;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
 }
 
 .nav-brand {
-  font-size: 1.15rem;
+  font-size: 1.2rem;
   font-weight: 700;
-  color: #1c2733;
+  color: #ffffff;
   text-decoration: none;
 }
 
 .nav-right {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 18px;
+}
+
+.nav-right a {
+  color: #e8f3fc;
+  text-decoration: none;
+  font-size: 0.92rem;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 16px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.nav-right a:hover {
+  background-color: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
 }
 
 .logout-btn {
   background-color: #ef4444;
   color: #ffffff;
   border: none;
-  padding: 7px 14px;
-  border-radius: 6px;
+  padding: 6px 14px;
+  border-radius: 16px;
   font-size: 0.85rem;
   font-weight: 600;
   cursor: pointer;
@@ -66,7 +79,6 @@ body {
   background-color: #dc2626;
 }
 
-/* ================= LEFT SIDEBAR (Telegram Style) ================= */
 .side-bar {
   width: 320px;
   min-width: 260px;
@@ -78,21 +90,24 @@ body {
   overflow-y: auto;
 }
 
-/* User Greeting Header */
 .side-bar > h1 {
   font-size: 1.1rem;
   font-weight: 700;
-  color: #ffffff;
-  background-color: #517da2; /* Telegram Blue */
+  color: #1c2733;
+  background-color: #f8fafc;
+  border-bottom: 1px solid #dfe5ec;
   padding: 15px 20px;
   position: sticky;
   top: 0;
   z-index: 10;
-  letter-spacing: 0.2px;
 }
 
-/* Individual Room List Item */
-.each-room {
+.chats-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.friend-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -102,28 +117,28 @@ body {
   gap: 10px;
 }
 
-.each-room:hover {
+.friend-container:hover {
   background-color: #f4f6f9;
 }
 
-.each-room h1 {
+.friend-container span {
   font-size: 1rem;
   font-weight: 600;
-  color: #222222;
+  color: #1c2733;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.joinForm {
+.friend-container form {
   flex-shrink: 0;
 }
 
-.joinForm button {
+.friend-container button {
   background-color: #e8f3fc;
   color: #2481cc;
   border: none;
-  padding: 6px 12px;
+  padding: 6px 14px;
   border-radius: 16px;
   font-size: 0.82rem;
   font-weight: 600;
@@ -131,36 +146,11 @@ body {
   transition: all 0.2s ease;
 }
 
-.joinForm button:hover {
+.friend-container button:hover {
   background-color: #2481cc;
   color: #ffffff;
 }
 
-.side-bar > br {
-  display: none;
-}
-
-/* Bottom "Find New Rooms" Button */
-.side-bar > a[href="/all-rooms"] {
-  display: block;
-  text-align: center;
-  background-color: #3390ec;
-  color: #ffffff;
-  text-decoration: none;
-  font-size: 0.9rem;
-  font-weight: 600;
-  padding: 12px 16px;
-  margin: auto 16px 16px 16px;
-  border-radius: 8px;
-  transition: background-color 0.2s ease;
-  box-shadow: 0 2px 4px rgba(51, 144, 236, 0.25);
-}
-
-.side-bar > a[href="/all-rooms"]:hover {
-  background-color: #2678ca;
-}
-
-/* ================= RIGHT MAIN CHAT AREA ================= */
 main {
   flex: 1;
   height: calc(100vh - 56px);
@@ -171,129 +161,32 @@ main {
   background-size: 20px 20px;
 }
 
-/* Room Sub-Header */
-/* Main Navigation Bar */
 .chat-nav {
+  height: 58px;
+  background-color: #454545;
+  color: #ffffff;
+  border-bottom: 1px solid #dfe5ec;
+  padding: 0 24px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 12px 20px;
-  background-color: #1e293b; /* Dark slate background */
-  color: #f8fafc;
-  border-bottom: 1px solid #334155;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  position: relative;
+  flex-shrink: 0;
 }
 
-/* Room Title */
-.roomname span {
-  font-size: 1.15rem;
-  font-weight: 700;
-  letter-spacing: 0.3px;
-}
-
-/* Truncated Inline Member Preview */
-.room-members {
-  width: 180px; /* Slightly wider than 120px for better readability */
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-size: 0.85rem;
-  color: #94a3b8;
-  margin: 0 15px;
-  justify-self: flex-start;
-}
-
-.room-members span:not(:last-child)::after {
-  content: ", "; /* Automatically adds commas between names */
-}
-
-/* View Members Button & Dropdown Container */
-.view-users {
-  position: relative;
-}
-
-#view-members-btn {
-  background-color: #3b82f6;
-  color: white;
-  border: none;
-  padding: 8px 14px;
-  border-radius: 6px;
-  font-size: 0.85rem;
+#friend-logo{
+  background-color: rgb(47, 255, 189);
+  border: 1px solid rgb(11, 194, 167);
+  color: #1c2733;
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  margin: 20px;
+  font-size: x-large;
   font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-#view-members-btn:hover {
-  background-color: #2563eb;
-}
-
-/* Floating Member List Dropdown */
-.all-members {
-  position: absolute;
-  top: 115%;
-  right: 0;
-  width: 240px;
-  max-height: 300px;
-  overflow-y: auto;
-  background-color: #ffffff;
-  color: #1e293b;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-  padding: 12px;
-  z-index: 100;
-}
-
-/* Close Button inside Dropdown */
-.all-members button {
-  display: block;
-  margin-left: auto;
-  margin-bottom: 8px;
-  background: #f1f5f9;
-  color: #475569;
-  border: none;
-  padding: 4px 10px;
-  border-radius: 4px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.all-members button:hover {
-  background: #e2e8f0;
-  color: #0f172a;
-}
-
-/* Individual Member Row */
-.member-item {
   display: flex;
   align-items: center;
-  justify-content: start;
-  gap: 20px;
-  padding: 6px 8px;
-  border-radius: 4px;
-  font-size: 0.9rem;
+  justify-content: center;
 }
 
-.member-item:hover {
-  background-color: #f8fafc;
-}
-
-/* Admin Badge */
-.admin-badge {
-  background-color: #fef3c7;
-  color: #b45309;
-  font-size: 0.7rem;
-  font-weight: 700;
-  padding: 2px 6px;
-  border-radius: 999px;
-  text-transform: uppercase;
-}
-
-
-/* ================= SCROLLABLE MESSAGE AREA ================= */
 .message-box {
   flex: 1;
   padding: 20px 24px;
@@ -310,7 +203,6 @@ main {
   width: 100%;
 }
 
-/* Incoming Message Bubble (White, Left) */
 #other-message,
 .message-box > div:not(.old-message)[style*="left"] {
   background-color: #ffffff !important;
@@ -319,13 +211,11 @@ main {
   border-radius: 12px 12px 12px 2px;
   max-width: 65%;
   width: fit-content;
-  font-size: 0.95rem;
   line-height: 1.4;
   word-wrap: break-word;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
 }
 
-/* Outgoing Message Bubble (Telegram Light Green, Right) */
 #my-message,
 .message-box > div:not(.old-message)[style*="auto"] {
   background-color: #eeffde !important;
@@ -334,7 +224,6 @@ main {
   border-radius: 12px 12px 2px 12px;
   max-width: 65%;
   width: fit-content;
-  font-size: 0.95rem;
   line-height: 1.4;
   word-wrap: break-word;
   margin-left: auto;
@@ -342,7 +231,6 @@ main {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
 }
 
-/* ================= BOTTOM MESSAGE INPUT BAR ================= */
 .message-input {
   background-color: #ffffff;
   border-top: 1px solid #dfe5ec;
@@ -355,8 +243,8 @@ main {
 
 .message-input input[type="text"] {
   flex: 1;
-  background-color: #f4f6f9;
-  border: 1px solid transparent;
+  background-color: #ebeced;
+  border: 1px solid #cdcecf;
   border-radius: 22px;
   padding: 11px 18px;
   font-size: 0.95rem;
@@ -385,35 +273,31 @@ main {
   background-color: #2678ca;
 }
 
-/* Responsive Mobile View */
 @media (max-width: 700px) {
   .side-bar {
     width: 120px;
     min-width: 120px;
   }
-  .each-room {
+  .friend-container {
     flex-direction: column;
     align-items: flex-start;
     padding: 10px;
   }
-  .each-room h1 {
+  .friend-container span {
     font-size: 0.85rem;
     max-width: 100px;
   }
-  .side-bar > a[href="/all-rooms"] {
-    margin: auto 8px 12px 8px;
-    padding: 8px;
-    font-size: 0.8rem;
-  }
 }
+
     </style>
 </head>
 <body>
     <nav class="navbar">
     <a href="/my-rooms" class="nav-brand">Chat</a>
     <div class="nav-right">
-        <a href="/my-rooms">Chat Rooms</a>
-        <a href="/home">Private Chats</a>
+        <a href="/search-friends">Find Friends</a>
+        <a href="/my-rooms">Joined Rooms</a>
+        <a href="/all-rooms">All Rooms</a>
       <form action="/logout" style="margin: 0;">
         <button type="submit" class="logout-btn">Logout</button>
       </form>
@@ -422,33 +306,119 @@ main {
 
 
     <div class="side-bar">
-    <h1>Hello {{user.username}}</h1>
-    <a href="/search-friends">Search Friends</a>
+    <h1>Hello {{user.username}}👋</h1>
+    <div class="chats-container">
+      <span style="margin-left: 1em; font-weight: 600; color: rgb(0, 133, 228);">All Friends</span>
+      {{#each user.friends}}
+      <div class="friend-container">
+        <span>{{this.friendName}}</span>
+        <form action="/get-chat" method="post">
+        <input type="text" name="myId" id="myId" value="{{../user._id}}" hidden> 
+        <input type="text" name="friendId" id="myId" value="{{this.friendId}}" hidden>
+        <input type="text" name="friendName" id="friendName" value="{{this.friendName}}" hidden>
+        <button type="submit">Chat</button>
+        </form>
+      </div>
+      {{/each}}
+    </div>
   </div>
  <main>
    
-  <div class="chat-nav">
-   
+   {{#if friendName}}
+   <div class="chat-nav">
+  <span id="friend-logo"></span>
+  <h2>{{friendName}}</h2>
   </div>
+  {{/if}}
    <div class="message-box">
-     {{#each room.chats}}
+     {{#each chats}}
       <div class="old-message">
         {{#ifCond this.sendername '==' ../user.username}}
         <div id="my-message" style="font-size: 1.1em;font-weight: 600;">{{../this.message}}</div>
         {{/ifCond}}
         {{#ifCond this.sendername '!=' ../user.username}}
-        <div id="other-message"><span style="color: rgb(97, 97, 97);">{{../this.sendername}}</span> : <span style="font-size: 1.1em;font-weight: 600;">{{../this.message}}</span></div>
+        <div id="other-message"><span style="font-size: 1.1em;font-weight: 600;">{{../this.message}}</span></div>
         {{/ifCond}}
 
       </div>
      {{/each}}
    </div>
+   {{#if friendName}}
    <div class="message-input">
-    <input type="text" name="roomId" id="activeRoomId" value="{{room._id}}" hidden>
+    <input type="text" name="uniqueId" id="uniqueId" value="{{chatId}}" hidden>
     <input type="text" name="user" id="user" value="{{user.username}}" hidden>
-    <input type="text" name="message" id="message">
+    <input type="text" name="message" id="message"  onkeydown="if (event.key === 'Enter') sendMessage(event)" 
+    placeholder="Type a message...">
     <button onclick="sendMessage(event)">Send</button>
    </div>
+   {{/if}}
  </main>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    const socket = io();
+
+    const messageBox = document.querySelector('.message-box');
+    const userData = document.getElementById('user');
+    const username = userData.value;
+    const thisUsername = username;
+    const friendLogo = document.getElementById('friend-logo');
+    const friendName = '{{friendName}}';
+
+
+
+    const uniqueId = document.getElementById('uniqueId').value;
+    console.log("uniqueId: ",uniqueId);
+    socket.emit('join-chat', {uniqueId});
+
+    console.log(friendName);
+    
+    if(friendName){
+      friendLogo.textContent = friendName.charAt(0);
+    }
+
+
+    const sendMessage = (e)=>{
+        const messageInput = document.getElementById('message');
+        const message = messageInput.value;
+        {{!-- console.log("messageInput.value: ", messageInput.value); --}}
+        console.log('username: ', username);
+        socket.emit('send-message',{ message, username });
+        messageInput.value = '';
+
+        messageBox.scrollTop = messageBox.scrollHeight;
+    }
+
+    socket.on("receive-message", ({message, socketId, username})=>{
+        const newMsgDiv = document.createElement('div');
+        newMsgDiv.style.color = "#1a202c";
+        newMsgDiv.style.padding = "10px 14px";
+        newMsgDiv.style.borderRadius = "10px";
+        newMsgDiv.style.maxWidth = "80%";
+        newMsgDiv.style.width = "fit-content";
+        newMsgDiv.style.lineHeight = "1.4";
+        newMsgDiv.style.wordWrap = "break-word";
+        newMsgDiv.style.position = "relative";
+        console.log(username + " Sent " + message);
+
+
+        if(username==thisUsername){
+        newMsgDiv.textContent = message;
+        newMsgDiv.style.backgroundColor = "#36f3c7bb";
+        newMsgDiv.style.marginLeft = 'auto';
+        newMsgDiv.style.marginRight = '0px';
+        newMsgDiv.style.fontWeight = "600"
+        } else{
+        newMsgDiv.textContent = message;
+        newMsgDiv.style.backgroundColor = "#0574e353";
+        newMsgDiv.style.left = '0px';
+        }
+        messageBox.append(newMsgDiv);
+
+        messageBox.scrollTop = messageBox.scrollHeight;
+    })
+
+    messageBox.scrollTop = messageBox.scrollHeight;
+</script>
 </body>
 </html>

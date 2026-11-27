@@ -1,18 +1,11 @@
 import mongoose from "mongoose";
 
 const PrivateChatSchema = new mongoose.Schema({
-  members: [
-   {
-     userId: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-    },
-    username: {
-      type: String,
-      required: true,
-    },
-}
-],
+uniqueId:{
+ type: String,
+ required: true,
+ unique: true,
+},
   chats: [
     {
       sendername: {
@@ -25,6 +18,8 @@ const PrivateChatSchema = new mongoose.Schema({
       },
     },
   ],
-});
+},
+{ timestamps: true },
+);
 
 export const PrivateChat = mongoose.model("private-chat", PrivateChatSchema);

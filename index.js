@@ -20,6 +20,15 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use('/', userRoutes );
 
+app.use((err, req, res, next)=>{
+  return res.render('error-page', {
+    success: false,
+    status: err.statusCode || 500,
+    message: err.message,
+    error: err.stack,
+  })
+})
+
 hbs.registerHelper('ifCond', ifCondHelper);
 
 connectToDB();

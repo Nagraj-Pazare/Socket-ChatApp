@@ -27,36 +27,48 @@ body {
 .navbar {
   width: 100%;
   height: 56px;
-  background-color: #ffffff;
-  border-bottom: 1px solid #dfe5ec;
+  background-color: #517da2;
   padding: 0 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-shrink: 0;
-  z-index: 20;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
 }
 
 .nav-brand {
-  font-size: 1.15rem;
+  font-size: 1.2rem;
   font-weight: 700;
-  color: #1c2733;
+  color: #ffffff;
   text-decoration: none;
 }
 
 .nav-right {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 18px;
+}
+
+.nav-right a {
+  color: #e8f3fc;
+  text-decoration: none;
+  font-size: 0.92rem;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 16px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.nav-right a:hover {
+  background-color: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
 }
 
 .logout-btn {
   background-color: #ef4444;
   color: #ffffff;
   border: none;
-  padding: 7px 14px;
-  border-radius: 6px;
+  padding: 6px 14px;
+  border-radius: 16px;
   font-size: 0.85rem;
   font-weight: 600;
   cursor: pointer;
@@ -83,8 +95,8 @@ body {
 .side-bar > h1 {
   font-size: 1.1rem;
   font-weight: 700;
-  color: #ffffff;
-  background-color: #517da2; /* Telegram Blue */
+  color: #000000;
+  background-color: #f1f1f1; /* Telegram Blue */
   padding: 15px 20px;
   position: sticky;
   top: 0;
@@ -146,7 +158,7 @@ body {
   display: block;
   text-align: center;
   background-color: #3390ec;
-  color: #ffffff;
+  color: #010101;
   text-decoration: none;
   font-size: 0.9rem;
   font-weight: 600;
@@ -356,7 +368,7 @@ main {
 
 .message-input input[type="text"] {
   flex: 1;
-  background-color: #f4f6f9;
+  background-color: #ebeced;
   border: 1px solid transparent;
   border-radius: 22px;
   padding: 11px 18px;
@@ -416,9 +428,11 @@ main {
 </head>
 <body>
   <nav class="navbar">
-    <a href="/my-rooms" class="nav-brand">Chat Rooms</a>
+    <a href="/my-rooms" class="nav-brand">Chat</a>
     <div class="nav-right">
-      <!-- Use POST /logout (or change to <a href="/logout" class="logout-btn">Logout</a> if your route is GET) -->
+        <a href="/search-friends">Find Friends</a>
+        <a href="/my-rooms">Joined Rooms</a>
+        <a href="/all-rooms">All Rooms</a>
       <form action="/logout" style="margin: 0;">
         <button type="submit" class="logout-btn">Logout</button>
       </form>
@@ -438,7 +452,6 @@ main {
      </div>
     {{/each}}
   <br><br>
-    <a href="/all-rooms">Click to find new Rooms</a>
   </div>
  <main>
    
@@ -478,8 +491,9 @@ main {
    <div class="message-input">
     <input type="text" name="roomId" id="activeRoomId" value="{{room._id}}" hidden>
     <input type="text" name="user" id="user" value="{{user.username}}" hidden>
-    <input type="text" name="message" id="message">
-    <button onclick="sendMessage(event)">Send</button>
+    <input type="text" name="message" id="message"  onkeydown="if (event.key === 'Enter') sendMessage(event)" 
+    placeholder="Type a message...">
+    <button onclick="sendMessage(event)" onkeypress="sendMessage(event)">Send</button>
    </div>
  </main>
 

@@ -14,47 +14,63 @@
 }
 
 body {
-  background-color: #f3f4f6;
-  color: #1f2937;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+      color: #1f2937;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background-color: #c8d9e6;
+      background-image: radial-gradient(#b5c9d8 1px, transparent 1px);
+      background-size: 20px 20px;
 }
 
 /* ================= TOP NAVBAR ================= */
 .navbar {
   width: 100%;
-  background-color: #ffffff;
-  border-bottom: 1px solid #e5e7eb;
-  padding: 0.9rem 2rem;
+  height: 56px;
+  background-color: #517da2;
+  padding: 0 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
-  margin-bottom: 2rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  margin-bottom: 50px;
 }
 
 .nav-brand {
   font-size: 1.2rem;
   font-weight: 700;
-  color: #111827;
+  color: #ffffff;
   text-decoration: none;
 }
 
 .nav-right {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 18px;
+}
+
+.nav-right a {
+  color: #e8f3fc;
+  text-decoration: none;
+  font-size: 0.92rem;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 16px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.nav-right a:hover {
+  background-color: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
 }
 
 .logout-btn {
   background-color: #ef4444;
   color: #ffffff;
   border: none;
-  padding: 0.45rem 1rem;
-  border-radius: 6px;
-  font-size: 0.88rem;
+  padding: 6px 14px;
+  border-radius: 16px;
+  font-size: 0.85rem;
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.2s ease;
@@ -65,6 +81,9 @@ body {
 }
 
 /* ================= ROOMS CONTAINER ================= */
+
+
+
 .all-rooms {
   width: 100%;
   max-width: 650px;
@@ -150,6 +169,18 @@ form[action="/searched-room"] button {
 
 form[action="/searched-room"] button:hover {
   background-color: #374151;
+}
+
+main{
+  display: flex;
+  gap: 12vw;
+  padding: 0px 50px;
+}
+
+main img{
+  height: 37.2vw;
+  width: 37.2vw;
+  border-radius: 12px;
 }
 
 /* Empty State ("No Rooms") */
@@ -293,28 +324,32 @@ form[action="/searched-room"] button:hover {
 <body>
 
 <nav class="navbar">
-    <a href="/my-rooms" class="nav-brand">Chat Rooms</a>
+    <a href="/" class="nav-brand">Chat</a>
     <div class="nav-right">
-      <!-- Use POST /logout (or change to <a href="/logout" class="logout-btn">Logout</a> if your route is GET) -->
+        <a href="/home">Private Messages</a>
+        <a href="/create-room">Create Room</a>
+       <a href="/my-rooms">My Joined Rooms</a>
       <form action="/logout" style="margin: 0;">
         <button type="submit" class="logout-btn">Logout</button>
       </form>
     </div>
   </nav>
 
-    <div class="all-rooms">
+    <main>
+      <img src="https://png.pngtree.com/thumb_back/fh260/background/20210115/pngtree-handheld-mobile-phone-chat-design-concept-image_524282.jpg" alt="demo image">
+      <div class="all-rooms">
     <div class="all-room-header">
     <span id="chat-list-tag">Rooms List</span> 
     <span id="greet-user-tag">Hello {{user.username}}👋</span>
     </div>
     <a href="/all-rooms" style="color: black;">View All</a>
+    <form action="/searched-room" method="get">
+    <input type="text" name="searchData" id="searchData" minlength="2" value="{{searchData}}">
+    <button>search</button>
+    </form>
     {{#unless rooms}}
     <h1>No Rooms</h1>
     {{/unless}}
-    <form action="/searched-room" method="get">
-    <input type="text" name="searchData" id="searchData" required minlength="2">
-    <button>search</button>
-    </form>
     {{#each rooms}}
      <div class="single-room">
        <h1>{{this.roomname}}</h1>
@@ -337,8 +372,7 @@ form[action="/searched-room"] button:hover {
     </form>
      </div>
     {{/each}}
-    <a href="/create-room">Create Room</a>
-    <a href="/my-rooms">My Joined Rooms</a>
     </div>
+    </main>
 </body>
 </html>

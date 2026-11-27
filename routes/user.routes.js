@@ -1,5 +1,5 @@
 import express from 'express';
-import { allRoomsController, createRoomController, createRoomRoute, loginController, loginRouteController, registerController, joinRoomController, myRoomsRoute, joinChatController, logoutController, searchedRoomController, getHomeController, searchFriendsRoute } from '../controllers/user.controller.js';
+import { allRoomsController, createRoomController, createRoomRoute, loginController, loginRouteController, registerController, joinRoomController, myRoomsRoute, joinChatController, logoutController, searchedRoomController, getHomeController, searchFriendsRoute, addFriendController, registerRouteController, searchFriendByName, getChat } from '../controllers/user.controller.js';
 import { authToken } from '../middleware/authToken.js';
 
 export const userRoutes = express.Router();
@@ -10,6 +10,7 @@ userRoutes.get('/', (req, res)=>{
     }
     return res.render('login');
 });
+userRoutes.get('/register', registerRouteController);
 userRoutes.get('/login', loginRouteController);
 userRoutes.get('/logout', logoutController)
 userRoutes.get('/all-rooms', authToken, allRoomsController);
@@ -23,6 +24,9 @@ userRoutes.post('/register', registerController);
 userRoutes.post('/login', loginController);
 userRoutes.post('/create-room', authToken, createRoomController);
 userRoutes.post('/join-chat', authToken, joinChatController);
+userRoutes.post('/search-friends', authToken, searchFriendByName)
+userRoutes.post('/add-friend', authToken, addFriendController);
+userRoutes.post('/get-chat', authToken, getChat);
 
 
 

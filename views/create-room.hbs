@@ -13,60 +13,83 @@
     }
 
     body {
-      background-color: #f3f4f6;
       color: #1f2937;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      background-color: #c8d9e6;
+      background-image: radial-gradient(#b5c9d8 1px, transparent 1px);
+      background-size: 20px 20px;
     }
 
     /* ================= TOP NAVBAR ================= */
     .navbar {
-      width: 100%;
-      background-color: #ffffff;
-      border-bottom: 1px solid #e5e7eb;
-      padding: 0.9rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
-    }
+  width: 100%;
+  height: 56px;
+  background-color: #517da2;
+  padding: 0 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
 
-    .nav-brand {
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: #111827;
-      text-decoration: none;
-    }
+.nav-brand {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-decoration: none;
+}
 
-    .nav-right {
-      display: flex;
-      align-items: center;
-      gap: 1.25rem;
-    }
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
 
-    .nav-username {
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: #374151;
-    }
+.nav-right a {
+  color: #e8f3fc;
+  text-decoration: none;
+  font-size: 0.92rem;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 16px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
 
-    .logout-btn {
-      background-color: #ef4444;
-      color: #ffffff;
-      border: none;
-      padding: 0.45rem 1rem;
-      border-radius: 6px;
-      font-size: 0.88rem;
-      font-weight: 600;
-      cursor: pointer;
-      text-decoration: none;
-      transition: background-color 0.2s ease;
-    }
+.nav-right a:hover {
+  background-color: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+}
 
-    .logout-btn:hover {
-      background-color: #dc2626;
-    }
+.logout-btn {
+  background-color: #ef4444;
+  color: #ffffff;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 16px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.logout-btn:hover {
+  background-color: #dc2626;
+}
+
+main{
+  display: flex;
+  gap: 1vw;
+  padding: 0px 50px;
+}
+
+main img{
+  height: auto;
+  width: 40vw;
+  border-radius: 12px;
+  margin-top: 6vh;
+}
 
     /* ================= CENTERED FORM CONTAINER ================= */
     .main-container {
@@ -181,10 +204,12 @@
 </head>
 <body>
 
-  <nav class="navbar">
-    <a href="/my-rooms" class="nav-brand">Chat Rooms</a>
+ <nav class="navbar">
+    <a href="/" class="nav-brand">Chat</a>
     <div class="nav-right">
-      <!-- Use POST /logout (or change to <a href="/logout" class="logout-btn">Logout</a> if your route is GET) -->
+        <a href="/my-rooms">Joined Rooms</a>
+        <a href="/All-rooms">All Rooms</a>
+        <a href="/home">Private Messages</a>
       <form action="/logout" style="margin: 0;">
         <button type="submit" class="logout-btn">Logout</button>
       </form>
@@ -194,7 +219,11 @@
 
 
   
-   <div class="main-container">
+   <main>
+
+<img src="https://png.pngtree.com/thumb_back/fh260/background/20210115/pngtree-handheld-mobile-phone-chat-design-concept-image_524282.jpg" alt="demo image">
+
+    <div class="main-container">
     <form action="/create-room" method="post" class="create-form">
       <h2>Create a New Room</h2>
 
@@ -214,6 +243,7 @@
       <button type="submit">Create</button>
     </form>
   </div>
+   </main>
 
     <script>
 
