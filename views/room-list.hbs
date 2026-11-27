@@ -7,130 +7,338 @@
 
     <style>
   * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  }
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
 
-  body {
-    background-color: #f4f6f8;
-    color: #2d3748;
-    padding: 32px 16px;
-    line-height: 1.5;
-  }
+body {
+  background-color: #f3f4f6;
+  color: #1f2937;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-  .all-rooms {
-    max-width: 600px;
-    margin: 0 auto;
-    background: #ffffff;
-    padding: 28px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-  }
+/* ================= TOP NAVBAR ================= */
+.navbar {
+  width: 100%;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 0.9rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  margin-bottom: 2rem;
+}
 
-  /* Main "Chat List" heading */
-  .all-rooms > h1:first-child {
-    font-size: 1.75rem;
-    color: #1a202c;
-    margin-bottom: 8px;
-    padding-bottom: 12px;
-    border-bottom: 2px solid #edf2f7;
-  }
+.nav-brand {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #111827;
+  text-decoration: none;
+}
 
-  /* Room name headings */
-  .all-rooms > h1:not(:first-child) {
-    font-size: 1.2rem;
-    color: #2b6cb0;
-    margin-top: 20px;
-    margin-bottom: 8px;
-  }
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
 
-  /* Room card / form */
-  .all-rooms form {
-    background-color: #f8fafc;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    padding: 14px 16px;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    font-size: 0.92rem;
-    color: #4a5568;
-  }
+.logout-btn {
+  background-color: #ef4444;
+  color: #ffffff;
+  border: none;
+  padding: 0.45rem 1rem;
+  border-radius: 6px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
 
-  /* Join button */
-  .all-rooms button[type="submit"] {
-    background-color: #3182ce;
-    color: #ffffff;
-    border: none;
-    padding: 8px 18px;
-    border-radius: 6px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-  }
+.logout-btn:hover {
+  background-color: #dc2626;
+}
 
-  .all-rooms button[type="submit"]:hover {
-    background-color: #2b6cb0;
-  }
+/* ================= ROOMS CONTAINER ================= */
+.all-rooms {
+  width: 100%;
+  max-width: 650px;
+  padding: 0 1rem 2.5rem 1rem;
+}
 
-  /* "Create Room" link styled as a clean button */
-  .all-rooms > a {
-    display: inline-block;
-    margin-top: 24px;
-    text-decoration: none;
-    background-color: #38a169;
-    color: #ffffff;
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 0.95rem;
-    transition: background-color 0.2s ease;
-  }
+/* Header Bar */
+.all-room-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid #e5e7eb;
+}
 
-  .all-rooms > a:hover {
-    background-color: #2f855a;
-  }
+#chat-list-tag {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #111827;
+}
 
-  .all-room-header{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  #chat-list-tag{
-    font-size: 1.8em;
-    font-weight: 700;
-  }
-  #greet-user-tag{
-    font-size: 1.4em;
-    font-weight: 400;
-    
-  }
+#greet-user-tag {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #4b5563;
+}
+
+/* "View All" Link */
+.all-rooms > a[href="/all-rooms"] {
+  display: inline-block;
+  margin-bottom: 0.85rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #2563eb !important;
+  text-decoration: none;
+  background-color: #eff6ff;
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+  border: 1px solid #bfdbfe;
+  transition: background-color 0.2s ease;
+}
+
+.all-rooms > a[href="/all-rooms"]:hover {
+  background-color: #dbeafe;
+}
+
+/* ================= SEARCH BAR FORM ================= */
+form[action="/searched-room"] {
+  display: flex;
+  gap: 0.6rem;
+  margin-bottom: 1.5rem;
+}
+
+form[action="/searched-room"] input[type="text"] {
+  flex: 1;
+  padding: 0.6rem 0.9rem;
+  background-color: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+form[action="/searched-room"] input[type="text"]:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+form[action="/searched-room"] button {
+  background-color: #111827;
+  color: #ffffff;
+  border: none;
+  padding: 0.6rem 1.25rem;
+  border-radius: 8px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+form[action="/searched-room"] button:hover {
+  background-color: #374151;
+}
+
+/* Empty State ("No Rooms") */
+.all-rooms > h1 {
+  text-align: center;
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: #6b7280;
+  background-color: #ffffff;
+  border: 1px dashed #d1d5db;
+  border-radius: 10px;
+  padding: 2.5rem 1rem;
+  margin-bottom: 1.25rem;
+}
+
+/* ================= INDIVIDUAL ROOM CARDS ================= */
+.single-room {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.single-room h1 {
+  font-size: 1.25rem;
+  color: #111827;
+}
+
+/* Private Room Badge */
+.single-room > span {
+  background-color: #fff7ed;
+  border: 1px solid #fed7aa;
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.82rem !important;
+  font-weight: 600;
+}
+
+/* Join Form, Members, Passkey Input & Button */
+.joinForm {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 0.25rem;
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+.joinForm p {
+  font-size: 0.85rem;
+  background-color: #fef2f2;
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+}
+
+.joinForm input[type="password"] {
+  margin-left: auto;
+  padding: 0.45rem 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.joinForm input[type="password"]:focus {
+  border-color: #2563eb;
+}
+
+.joinForm button {
+  margin-left: auto;
+  background-color: #2563eb;
+  color: #ffffff;
+  border: none;
+  padding: 0.5rem 1.1rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.joinForm input[type="password"] + button {
+  margin-left: 0;
+}
+
+.joinForm button:hover {
+  background-color: #1d4ed8;
+}
+
+/* Bottom Action Links ("Create Room" & "My Joined Rooms") */
+.all-rooms > a[href="/create-room"],
+.all-rooms > a[href="/my-rooms"],
+.all-rooms > a[href="/my-friends"]{
+  display: inline-block;
+  margin-top: 0.5rem;
+  margin-right: 0.6rem;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 0.65rem 1.25rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: background-color 0.2s ease;
+}
+
+.all-rooms > a[href="/create-room"] {
+  background-color: #10b981;
+}
+
+.all-rooms > a[href="/create-room"]:hover {
+  background-color: #059669;
+}
+
+.all-rooms > a[href="/my-rooms"] {
+  background-color: #4f46e5;
+}
+
+.all-rooms > a[href="/my-rooms"]:hover {
+  background-color: #4338ca;
+}
+
+.all-rooms > a[href="/my-friends"] {
+  background-color: #4f46e5;
+}
+
+.all-rooms > a[href="/my-friends"]:hover {
+  background-color: #4338ca;
+}
+
 </style>
 
 </head>
 <body>
+
+<nav class="navbar">
+    <a href="/my-rooms" class="nav-brand">Chat Rooms</a>
+    <div class="nav-right">
+      <!-- Use POST /logout (or change to <a href="/logout" class="logout-btn">Logout</a> if your route is GET) -->
+      <form action="/logout" style="margin: 0;">
+        <button type="submit" class="logout-btn">Logout</button>
+      </form>
+    </div>
+  </nav>
+
     <div class="all-rooms">
     <div class="all-room-header">
-    <span id="chat-list-tag">Chat List</span> 
-    <span id="greet-user-tag">Hello {{username}}👋</span>
+    <span id="chat-list-tag">Rooms List</span> 
+    <span id="greet-user-tag">Hello {{user.username}}👋</span>
     </div>
+    <a href="/all-rooms" style="color: black;">View All</a>
+    {{#unless rooms}}
+    <h1>No Rooms</h1>
+    {{/unless}}
+    <form action="/searched-room" method="get">
+    <input type="text" name="searchData" id="searchData" required minlength="2">
+    <button>search</button>
+    </form>
     {{#each rooms}}
-    <h1>{{this.roomname}}</h1>
+     <div class="single-room">
+       <h1>{{this.roomname}}</h1>
+    {{#if this.passkey}}
+     <span style="color: rgb(252, 117, 6); font-size: 1.1em; margin-left: auto; margin-right: 0px;">Private Room</span>
+    {{/if}}
     <form action="/join-room" method="post" class="joinForm">
     members: 
     {{#each this.members}}
     {{this.username}},
     {{/each}}
     <input type="text" name="roomId" id="roomId" value="{{this._id}}" hidden>
+    {{#if ../error}}
+    <p style="color: red; font-weight: 600;">{{../error}} Passkey</p>
+    {{/if}}
+    {{#if this.passkey}}
+    <input type="password" name="passkey" id="passkey" required placeholder="Enter PassKey">
+    {{/if}}
     <button type="submit">Join</button>
     </form>
+     </div>
     {{/each}}
     <a href="/create-room">Create Room</a>
+    <a href="/my-rooms">My Joined Rooms</a>
     </div>
 </body>
 </html>

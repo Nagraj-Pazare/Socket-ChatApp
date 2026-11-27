@@ -11,17 +11,19 @@ export const initialServer = (httpserver) => {
   io.on("connection", (socket) => {
 
  console.log("connected: ", socket.id);
-
- let currentRoomId;
  socket.on('join-room', ({roomId})=>{
+    socket.rooms.forEach((room) => {
+      if (room !== socket.id) {
+        socket.leave(room);
+      }
+    });
+    socket.currentRoomId = roomId;
     socket.join(roomId);
-    currentRoomId = roomId
     console.log(socket.id + " joined " + roomId);
  });
 
  socket.on('send-message', async ({message, username})=>{
-  await Room.findByIdAndUpdate(currentRoomId, {
-});
+    const currentRoomId = socket.currentRoomId;
     console.log("send-message: ",message);
     console.log("send-message  username: ", username);
     console.log("send-message currentRoomId: ",currentRoomId);

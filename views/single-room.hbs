@@ -6,154 +6,482 @@
     <title>Document</title>
 
 <style>
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  }
+ * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
 
-  body {
-    background-color: #f4f6f8;
-    color: #2d3748;
-    padding: 24px 16px;
-    display: flex;
+body {
+  display: flex;
+  flex-wrap: wrap;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background-color: #e7ebf0;
+  color: #1c2733;
+}
+
+/* ================= TOP GLOBAL NAVBAR ================= */
+.navbar {
+  width: 100%;
+  height: 56px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #dfe5ec;
+  padding: 0 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  z-index: 20;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.nav-brand {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #1c2733;
+  text-decoration: none;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logout-btn {
+  background-color: #ef4444;
+  color: #ffffff;
+  border: none;
+  padding: 7px 14px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.logout-btn:hover {
+  background-color: #dc2626;
+}
+
+/* ================= LEFT SIDEBAR (Telegram Style) ================= */
+.side-bar {
+  width: 320px;
+  min-width: 260px;
+  height: calc(100vh - 56px);
+  background-color: #ffffff;
+  border-right: 1px solid #dfe5ec;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+/* User Greeting Header */
+.side-bar > h1 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #ffffff;
+  background-color: #517da2; /* Telegram Blue */
+  padding: 15px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  letter-spacing: 0.2px;
+}
+
+/* Individual Room List Item */
+.each-room {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border-bottom: 1px solid #f1f4f7;
+  transition: background-color 0.15s ease;
+  gap: 10px;
+}
+
+.each-room:hover {
+  background-color: #f4f6f9;
+}
+
+.each-room h1 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #222222;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.joinForm {
+  flex-shrink: 0;
+}
+
+.joinForm button {
+  background-color: #e8f3fc;
+  color: #2481cc;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.joinForm button:hover {
+  background-color: #2481cc;
+  color: #ffffff;
+}
+
+.side-bar > br {
+  display: none;
+}
+
+/* Bottom "Find New Rooms" Button */
+.side-bar > a[href="/all-rooms"] {
+  display: block;
+  text-align: center;
+  background-color: #3390ec;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 12px 16px;
+  margin: auto 16px 16px 16px;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+  box-shadow: 0 2px 4px rgba(51, 144, 236, 0.25);
+}
+
+.side-bar > a[href="/all-rooms"]:hover {
+  background-color: #2678ca;
+}
+
+/* ================= RIGHT MAIN CHAT AREA ================= */
+main {
+  flex: 1;
+  height: calc(100vh - 56px);
+  display: flex;
+  flex-direction: column;
+  background-color: #c8d9e6;
+  background-image: radial-gradient(#b5c9d8 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* Room Sub-Header */
+/* Main Navigation Bar */
+.chat-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background-color: #1e293b; /* Dark slate background */
+  color: #f8fafc;
+  border-bottom: 1px solid #334155;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  position: relative;
+}
+
+/* Room Title */
+.roomname span {
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+/* Truncated Inline Member Preview */
+.room-members {
+  width: 180px; /* Slightly wider than 120px for better readability */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 0.85rem;
+  color: #94a3b8;
+  margin: 0 15px;
+  justify-self: flex-start;
+}
+
+.room-members span:not(:last-child)::after {
+  content: ", "; /* Automatically adds commas between names */
+}
+
+/* View Members Button & Dropdown Container */
+.view-users {
+  position: relative;
+}
+
+#view-members-btn {
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+#view-members-btn:hover {
+  background-color: #2563eb;
+}
+
+/* Floating Member List Dropdown */
+.all-members {
+  position: absolute;
+  top: 115%;
+  right: 0;
+  width: 240px;
+  max-height: 300px;
+  overflow-y: auto;
+  background-color: #ffffff;
+  color: #1e293b;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  padding: 12px;
+  z-index: 100;
+}
+
+/* Close Button inside Dropdown */
+.all-members button {
+  display: block;
+  margin-left: auto;
+  margin-bottom: 8px;
+  background: #f1f5f9;
+  color: #475569;
+  border: none;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.all-members button:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+/* Individual Member Row */
+.member-item {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 20px;
+  padding: 6px 8px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.member-item:hover {
+  background-color: #f8fafc;
+}
+
+/* Admin Badge */
+.admin-badge {
+  background-color: #fef3c7;
+  color: #b45309;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 999px;
+  text-transform: uppercase;
+}
+
+
+/* ================= SCROLLABLE MESSAGE AREA ================= */
+.message-box {
+  flex: 1;
+  padding: 20px 24px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  scroll-behavior: smooth;
+}
+
+.old-message {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* Incoming Message Bubble (White, Left) */
+#other-message,
+.message-box > div:not(.old-message)[style*="left"] {
+  background-color: #ffffff !important;
+  color: #1c2733;
+  padding: 9px 14px;
+  border-radius: 12px 12px 12px 2px;
+  max-width: 65%;
+  width: fit-content;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  word-wrap: break-word;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+/* Outgoing Message Bubble (Telegram Light Green, Right) */
+#my-message,
+.message-box > div:not(.old-message)[style*="auto"] {
+  background-color: #eeffde !important;
+  color: #1c2733;
+  padding: 9px 14px;
+  border-radius: 12px 12px 2px 12px;
+  max-width: 65%;
+  width: fit-content;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  word-wrap: break-word;
+  margin-left: auto;
+  margin-right: 0;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+/* ================= BOTTOM MESSAGE INPUT BAR ================= */
+.message-input {
+  background-color: #ffffff;
+  border-top: 1px solid #dfe5ec;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.message-input input[type="text"] {
+  flex: 1;
+  background-color: #f4f6f9;
+  border: 1px solid transparent;
+  border-radius: 22px;
+  padding: 11px 18px;
+  font-size: 0.95rem;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.message-input input[type="text"]:focus {
+  background-color: #ffffff;
+  border-color: #3390ec;
+}
+
+.message-input button {
+  background-color: #3390ec;
+  color: #ffffff;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 22px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.message-input button:hover {
+  background-color: #2678ca;
+}
+
+/* Responsive Mobile View */
+@media (max-width: 700px) {
+  .side-bar {
+    width: 120px;
+    min-width: 120px;
+  }
+  .each-room {
     flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
-  }
-
-  /* Scrollable chat history container */
-  .message-box {
-    width: 100%;
-    max-width: 600px;
-    height: 70vh;
-    background-color: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-bottom: none;
-    border-radius: 12px 12px 0 0;
-    padding: 20px;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    scroll-behavior: smooth;
-  }
-
-  /* Individual message bubbles (works for both .old-message and new plain divs) */
-  #other-message {
-    background-color: #0574e353;
-    color: #1a202c;
-    padding: 10px 14px;
-    border-radius: 10px;
-    max-width: 80%;
-    width: fit-content;
-    font-weight: 400;
-    line-height: 1.4;
-    word-wrap: break-word;
-  }
-
-  #my-message {
-    background-color: #36f3c7bb;
-    color: #1a202c;
-    padding: 10px 14px;
-    border-radius: 10px;
-    max-width: 80%;
-    width: fit-content;
-    font-weight: 400;
-    line-height: 1.4;
-    word-wrap: break-word;
-    margin-left: auto;
-    margin-right: 0px;
-  }
-
-  /* Bottom input bar attached seamlessly to .message-box */
-  .message-input {
-    width: 100%;
-    max-width: 600px;
-    background-color: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 0 0 12px 12px;
-    padding: 12px 16px;
-    display: flex;
-    gap: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  }
-
-  /* Text input field */
-  .message-input input[type="text"] {
-    flex: 1;
-    padding: 10px 14px;
-    border: 1px solid #cbd5e0;
-    border-radius: 8px;
-    font-size: 0.95rem;
-    outline: none;
-    transition: border-color 0.2s ease;
-  }
-
-  .message-input input[type="text"]:focus {
-    border-color: #3182ce;
-  }
-
-  /* Send button */
-  .message-input button {
-    background-color: #3182ce;
-    color: #ffffff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-size: 0.95rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-  }
-
-  .message-input button:hover {
-    background-color: #2b6cb0;
-  }
-
-  .roomname{
-    height: 50px;
-    width: fit-content;
-    background-color: rgb(222, 220, 220);
-    font-size: 1.5em;
-    font-weight: 600;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 10px 0px;
+    align-items: flex-start;
     padding: 10px;
-    border-radius: 10px;
   }
+  .each-room h1 {
+    font-size: 0.85rem;
+    max-width: 100px;
+  }
+  .side-bar > a[href="/all-rooms"] {
+    margin: auto 8px 12px 8px;
+    padding: 8px;
+    font-size: 0.8rem;
+  }
+}
+
+
+  
 </style>
 
 
 </head>
 <body>
-  <h1>Hello {{user.username}}</h1>
-  <div class="roomname">
+  <nav class="navbar">
+    <a href="/my-rooms" class="nav-brand">Chat Rooms</a>
+    <div class="nav-right">
+      <!-- Use POST /logout (or change to <a href="/logout" class="logout-btn">Logout</a> if your route is GET) -->
+      <form action="/logout" style="margin: 0;">
+        <button type="submit" class="logout-btn">Logout</button>
+      </form>
+    </div>
+  </nav>
+
+
+  <div class="side-bar">
+    <h1>Hello {{user.username}}</h1>
+    {{#each joinedRooms}}
+     <div class="each-room">
+      <h1>{{this.roomname}}</h1>
+      <form action="/join-chat" method="post" class="joinForm">
+    <input type="text" name="roomId" value="{{this._id}}" hidden>
+    <button type="submit">Join Chat</button>
+    </form>
+     </div>
+    {{/each}}
+  <br><br>
+    <a href="/all-rooms">Click to find new Rooms</a>
+  </div>
+ <main>
+   
+  <div class="chat-nav">
+    <div class="roomname">
       <span>{{room.roomname}}</span>
     </div>
+    <div class="view-users">
+      <button onclick="viewAllMembers()" id="view-members-btn">View-Members</button>
+      <div class="all-members" style="display: none;">
+      <button onclick="closeMemberView()">close</button>
+      {{#each room.members}}
+      <div class="member-item">
+         <span>{{this.username}}</span>
+      {{#if this.isRoomAdmin}}
+      <span>(Admin)</span>
+      {{/if}}
+      </div>
+      {{/each}}
+      </div>
+    </div>
+  </div>
+    
    <div class="message-box">
      {{#each room.chats}}
       <div class="old-message">
         {{#ifCond this.sendername '==' ../user.username}}
-        <div id="my-message">me :  {{../this.message}}</div>
+        <div id="my-message" style="font-size: 1.1em;font-weight: 600;">{{../this.message}}</div>
         {{/ifCond}}
         {{#ifCond this.sendername '!=' ../user.username}}
-        <div id="other-message">{{../this.sendername}} : {{../this.message}}</div>
+        <div id="other-message"><span style="color: rgb(97, 97, 97);">{{../this.sendername}}</span> : <span style="font-size: 1.1em;font-weight: 600;">{{../this.message}}</span></div>
         {{/ifCond}}
 
       </div>
      {{/each}}
    </div>
    <div class="message-input">
-    <input type="text" name="roomId" id="roomId" value="{{room._id}}" hidden>
+    <input type="text" name="roomId" id="activeRoomId" value="{{room._id}}" hidden>
     <input type="text" name="user" id="user" value="{{user.username}}" hidden>
     <input type="text" name="message" id="message">
     <button onclick="sendMessage(event)">Send</button>
    </div>
+ </main>
 
 
 <script src="/socket.io/socket.io.js"></script>
@@ -164,9 +492,11 @@
     const userData = document.getElementById('user');
     const username = userData.value;
     const thisUsername = username;
+    const allMemberDiv = document.querySelector('.all-members');
+    const viewMemBtn = document.getElementById('view-members-btn');
 
 
-    const roomData = document.getElementById('roomId');
+    const roomData = document.getElementById('activeRoomId');
     const roomId = roomData.value; 
     {{!-- console.log(roomId); --}}
     socket.emit('join-room', {roomId});
@@ -197,10 +527,11 @@
 
 
         if(username==thisUsername){
-        newMsgDiv.textContent =  "me: " + message;
+        newMsgDiv.textContent = message;
         newMsgDiv.style.backgroundColor = "#36f3c7bb";
         newMsgDiv.style.marginLeft = 'auto';
         newMsgDiv.style.marginRight = '0px';
+        newMsgDiv.style.fontWeight = "600"
         } else{
         newMsgDiv.textContent = username + ": " + message;
         newMsgDiv.style.backgroundColor = "#0574e353";
@@ -213,6 +544,15 @@
 
     messageBox.scrollTop = messageBox.scrollHeight;
     
+    const viewAllMembers = ()=>{
+        allMemberDiv.style.display = 'grid';
+        viewMemBtn.style.display = 'none';
+    }
+
+    const closeMemberView = ()=>{
+      allMemberDiv.style.display = 'none';
+      viewMemBtn.style.display = 'block';
+    }
 </script>
 </body>
 </html>

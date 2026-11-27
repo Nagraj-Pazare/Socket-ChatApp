@@ -5,6 +5,10 @@ const roomSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  passkey:{
+    type: String,
+    default:null,
+  },
   members: [
     {
       userId: {
@@ -13,7 +17,13 @@ const roomSchema = new mongoose.Schema({
       },
       username: {
         type: String,
+        required: true,
       },
+      isRoomAdmin:{
+        type: Boolean,
+        required: true,
+        default: false,
+      }
     },
   ],
   chats: [
